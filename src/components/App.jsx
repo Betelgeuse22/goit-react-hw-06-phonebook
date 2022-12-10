@@ -1,6 +1,6 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import toast, { Toaster } from 'react-hot-toast';
 
 import Form from './Form/Form';
 import Contacts from './Contacts/Contacts';
@@ -8,16 +8,29 @@ import Filter from './Filter/Filter';
 import { AppSection, TitelPhone, TitelContact } from './App.styled';
 import { GlobalStyle } from './GlobalStyle';
 
+const LS_KEY = 'contacts';
+
 class App extends React.Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const savedContacts = localStorage.getItem(LS_KEY);
+    const parsContacts = JSON.parse(savedContacts);
+
+    if (parsContacts) {
+      this.setState({ contacts: parsContacts });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState) {
+      localStorage.setItem(LS_KEY, JSON.stringify(contacts));
+    }
+  }
 
   addContact = ({ name, number }) => {
     const { contacts } = this.state;
@@ -28,7 +41,7 @@ class App extends React.Component {
         contact => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase()
       )
     ) {
-      Notify.failure(`${name} is already in contacts.`);
+      toast.error(`${name} is already in contacts.`);
     } else {
       this.setState(prevState => ({
         contacts: [...prevState.contacts, contact],
@@ -62,6 +75,7 @@ class App extends React.Component {
     return (
       <AppSection>
         <GlobalStyle />
+        <Toaster />
         <TitelPhone>Phonebook</TitelPhone>
         <Form onAddContact={this.addContact} />
         <TitelContact>Contacts</TitelContact>
