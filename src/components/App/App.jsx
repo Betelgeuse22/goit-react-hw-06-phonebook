@@ -2,11 +2,11 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import toast, { Toaster } from 'react-hot-toast';
 
-import Form from './Form/Form';
-import Contacts from './Contacts/Contacts';
-import Filter from './Filter/Filter';
+import Form from '../Form/Form';
+import Contacts from '../Contacts/Contacts';
+import Filter from '../Filter/Filter';
 import { AppSection, TitelPhone, TitelContact } from './App.styled';
-import { GlobalStyle } from './GlobalStyle';
+import { GlobalStyle } from '../GlobalStyle';
 
 const LS_KEY = 'contacts';
 
