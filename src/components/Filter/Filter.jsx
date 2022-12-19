@@ -5,11 +5,7 @@ import PropTypes from 'prop-types';
 const Filter = ({ value, onChangeFilter }) => (
   <>
     <FilterText>Find contacts by name</FilterText>
-    <FilterInput
-      type="text"
-      value={value}
-      onChange={event => onChangeFilter(event.currentTarget.value)}
-    />
+    <FilterInput type="text" value={value} onChange={onChangeFilter} />
   </>
 );
 
