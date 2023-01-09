@@ -9,7 +9,7 @@ import { FormStyle, Input, Label, Button } from './Form.styled';
 export function Form() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
-  
+
   const nameId = nanoid();
   const numberId = nanoid();
 
@@ -45,11 +45,9 @@ export function Form() {
       )
     ) {
       toast.error(`${name} is already in contacts.`);
-      reset();
       return;
     } else if (contactsLists.find(contact => number === contact.number)) {
       toast.error(`${`${name} : ${number}`} is already in contacts.`);
-      reset();
       return;
     }
 
